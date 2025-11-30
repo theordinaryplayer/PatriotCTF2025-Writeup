@@ -1,9 +1,8 @@
-
-# Matrix Reconstruction — PatriotCTF
+## Matrix Reconstruction — PatriotCTF
 
 ---
 
-## Challenge Overview
+### Challenge Overview
 
 We are given:
 
@@ -31,7 +30,7 @@ Recover \( A \) and \( B \) from the leaked states, then decrypt `cipher.txt` to
 
 ---
 
-##   Step 1 — Understanding the math
+### Step 1 — Understanding the math
 
 We have:
 
@@ -64,7 +63,7 @@ This **eliminates \( B \)** completely.
 
 ---
 
-## Step 2 — Solving for \( A \)
+### Step 2 — Solving for \( A \)
 
 We can collect:
 
@@ -87,7 +86,7 @@ We just need 32 linearly independent \( \Delta_n \) vectors to ensure \( X \) is
 
 ---
 
-## Step 3 — Recovering \( B \)
+### Step 3 — Recovering \( B \)
 
 Once \( A \) is known:
 
@@ -99,7 +98,7 @@ We can use any \( n \) to compute \( B \).
 
 ---
 
-## Step 4 — Implementation details
+### Step 4 — Implementation details
 
 1. **Parse** leaked states as integers.
 2. **Compute** \( \Delta_n = S_{n+1} \oplus S_n \).
@@ -116,7 +115,7 @@ We can use any \( n \) to compute \( B \).
 
 ---
 
-## Step 5 — Python code
+### Step 5 — Python code
 
 ```python
 import numpy as np
@@ -210,7 +209,7 @@ print(plaintext.decode())
 
 ---
 
-## Step 6 — Flag
+### Step 6 — Flag
 
 Running the script produces the decrypted message containing the flag:
 
@@ -220,7 +219,7 @@ pctf{mAtr1x_r3construct?on_!s_fu4n}
 
 ---
 
-## Conclusion
+### Conclusion
 
 The vulnerability here was using a **linear recurrence in GF(2)** without enough security — knowing consecutive states allows full recovery of \( A \) and \( B \).  
 This is a classic case where **linearity** in crypto leads to breaks.
